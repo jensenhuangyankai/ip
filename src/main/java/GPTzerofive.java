@@ -55,6 +55,11 @@ public class GPTzerofive {
                 taskList.add(newTask);
                 taskEchoPrint(newTask);
             }
+            case "delete" -> {
+                int index = Integer.parseInt(details) - 1;
+                Task task = taskList.remove(index);
+                Misc.formattedPrint("Noted. I've removed this task:\n" + task.toString() + "\nNow you have " + taskList.size() + " tasks in the list.");
+            }
             default -> Misc.formattedPrint("Unknown command: " + command);
         }
     }
