@@ -1,39 +1,11 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class GPTzerofive {
-    static String[] taskList = new String[100];
-    static int taskCount = 0;
+    static List<Task> taskList = new ArrayList<>();
 
-    private static void addToList(String task) {
-        taskList[taskCount] = task;
-        taskCount++;
-    }
-
-    private static void printTaskList() {
-        String returnValue = "";
-        for (int i = 0; i < taskCount; i++) {
-            returnValue += (i + 1) + ". " + taskList[i] + "\n";
-        }
-        formattedPrint(returnValue);
-    }
-
-    private static void formattedPrint(String message) {
-        Scanner scanner = new Scanner(message);
-        String resultString = "";
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            resultString += "\t" + line + "\n";
-        }
-        scanner.close();
-
-        System.out.println("""
-                \t---------------------------------------------------\n""" +
-                resultString +
-                "\n\t---------------------------------------------------");
-    }
-
-    private static void taskEchoPrint(String task){
-        formattedPrint("added: " + task);
+    private static void taskEchoPrint(Task task) {
+        Misc.formattedPrint(
+                "Got it. I've added this task:\n" + task.toString() + "\nNow you have " + taskList.size() + " tasks in the list.");
     }
 
     public static void main(String[] args) {
@@ -43,22 +15,47 @@ public class GPTzerofive {
                 """;
         String goodbyeString = """
                 Goodbye! Have a nice day!""";
-        formattedPrint(helloString);
+        Misc.formattedPrint(helloString);
 
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        while (!"list".equals(input)) {
-            taskEchoPrint(input);
-            addToList(input);
+        while (!"bye".equals(input)) {
+            handleCommand(input);
             input = scanner.nextLine();
 
         }
-        if (input.equals("list")) {
-            printTaskList();
-        }
+        System.out.println("Bye. Hope to see you again soon!");
 
         scanner.close();
 
-        formattedPrint(goodbyeString);
+        Misc.formattedPrint(goodbyeString);
+    }
+
+    private static void handleCommand(String input) {
+        String[] parts = input.split(" ", 2);
+        String command = parts[0];
+        String details = parts.length > 1 ? parts[1] : "";
+
+        switch (command) {
+            case "list" -> Task.printTaskList(taskList);
+            case "todo" -> {
+                Todo newTask = new Todo(details);
+                taskList.add(newTask);
+                taskEchoPrint(newTask);
+            }
+            case "deadline" -> {
+                String[] deadlineParts = details.split(" /by ");
+                Deadline newTask = new Deadline(deadlineParts[0], deadlineParts[1]);
+                taskList.add(newTask);
+                taskEchoPrint(newTask);
+            }
+            case "event" -> {
+                String[] eventParts = details.split(" /from | /to ");
+                Event newTask = new Event(eventParts[0], eventParts[1], eventParts[2]);
+                taskList.add(newTask);
+                taskEchoPrint(newTask);
+            }
+            default -> Misc.formattedPrint("Unknown command: " + command);
+        }
     }
 }
