@@ -1,32 +1,39 @@
 import java.io.IOException;
-import java.util.*;
 
 public class GPTzerofive {
-    static List<Task> taskList = new ArrayList<>();
+    private static final String FILE_PATH = "data/tasks.txt";
+    private final Ui ui;
+    private final Storage storage;
+    private final TaskList taskList;
 
-    
-
-    public static void main(String[] args) throws GPTException, IOException {
-        Misc.loadFromFile(taskList);
-        String helloString = """
-                Hello! I'm GPT0.5.
-                What can I do for you today?
-                """;
-        String goodbyeString = """
-                Goodbye! Have a nice day!""";
-        Misc.formattedPrint(helloString);
-
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        while (!"bye".equals(input)) {
-            Misc.handleCommand(input, taskList);
-            input = scanner.nextLine();
-        }
-        System.out.println("Bye. Hope to see you again soon!");
-
-        scanner.close();
-
-        Misc.formattedPrint(goodbyeString);
+    public GPTzerofive() {
+        this.ui = new Ui();
+        this.storage = new Storage(FILE_PATH);
+        this.taskList = new TaskList();
     }
 
+    public void run() {
+        ui.showWelcome();
+        try {
+            storage.loadFromFile(taskList);
+        } catch (IOException | GPTException e) {
+            ui.showError(e.getMessage());
+        }
+
+        String input = ui.readCommand();
+        while (!"bye".equals(input)) {
+            try {
+                Command command = Parser.parse(input);
+                command.exec(taskList, ui, storage);
+            } catch (GPTException e) {
+                ui.showError(e.getMessage());
+            }
+            input = ui.readCommand();
+        }
+        ui.showGoodbye();
+    }
+
+    public static void main(String[] args) {
+        new GPTzerofive().run();
+    }
 }

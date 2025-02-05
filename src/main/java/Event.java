@@ -10,9 +10,13 @@ public class Event extends Task{
 
     public Event(String description, String startDate, String endDate) {
         super(description);
+        this.startDate = parseDate(startDate);
+        this.endDate = parseDate(endDate);
+    }
+
+    private LocalDateTime parseDate(String date) {
         try {
-            this.startDate = LocalDateTime.parse(startDate, INPUT_FORMATTER);
-            this.endDate = LocalDateTime.parse(endDate, INPUT_FORMATTER);
+            return LocalDateTime.parse(date, INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid date format. Please use d/M/yyyy HHmm.");
         }
