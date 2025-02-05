@@ -1,4 +1,3 @@
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -10,8 +9,12 @@ public class Deadline extends Task {
 
     public Deadline(String description, String by) {
         super(description);
+        this.by = parseDate(by);
+    }
+
+    private LocalDateTime parseDate(String date) {
         try {
-            this.by = LocalDateTime.parse(by, INPUT_FORMATTER);
+            return LocalDateTime.parse(date, INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid date format. Please use d/M/yyyy HHmm.");
         }
