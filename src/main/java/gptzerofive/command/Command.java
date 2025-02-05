@@ -1,3 +1,10 @@
+package gptzerofive.command;
+
+import gptzerofive.exception.GPTException;
+import gptzerofive.storage.Storage;
+import gptzerofive.task.*;
+import gptzerofive.ui.Ui;
+
 public abstract class Command {
     public abstract void exec(TaskList taskList, Ui ui, Storage storage) throws GPTException;
 }

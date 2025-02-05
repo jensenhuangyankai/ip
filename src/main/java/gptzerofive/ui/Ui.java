@@ -1,3 +1,5 @@
+package gptzerofive.ui;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -46,6 +48,7 @@ public class Ui {
         }
         scanner.close();
 
-        System.out.println("\t---------------------------------------------------\n" + resultString + "\t---------------------------------------------------");
+        System.out.println("\t---------------------------------------------------\n" + resultString
+                + "\t---------------------------------------------------");
     }
 }

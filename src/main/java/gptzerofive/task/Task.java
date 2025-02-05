@@ -1,5 +1,4 @@
-
-import java.util.List;
+package gptzerofive.task;
 
 public abstract class Task {
     enum Type {
@@ -27,16 +26,30 @@ public abstract class Task {
         this.done = true;
     }
 
-    public static void printTaskList(List<Task> taskList) {
-        String returnValue = "";
-        for (int i = 0; i < taskList.size(); i++) {
-            Task task = taskList.get(i);
-            returnValue += (i + 1) + "." + task.toString() + "\n";
-        }
-        Misc.formattedPrint("Here are the tasks in your list:\n" + returnValue);
+    public Type getType() {
+        return type;
     }
 
-    
+    public String getDescription() {
+        return description;
+    }
+
+    public Boolean isDone() {
+        return done;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDone(Boolean done) {
+        this.done = done;
+    }
+
     public abstract String convertToFileString();
 
     @Override

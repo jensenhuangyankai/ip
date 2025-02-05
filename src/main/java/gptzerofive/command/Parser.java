@@ -1,3 +1,9 @@
+package gptzerofive.command;
+
+import gptzerofive.exception.GPTException;
+import gptzerofive.task.*;
+import gptzerofive.command.*;
+
 public class Parser {
     public static Command parse(String input) throws GPTException {
         String[] parts = input.split(" ", 2);

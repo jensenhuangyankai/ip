@@ -1,3 +1,10 @@
+package gptzerofive;
+
+import gptzerofive.command.*;
+import gptzerofive.exception.GPTException;
+import gptzerofive.storage.Storage;
+import gptzerofive.task.TaskList;
+import gptzerofive.ui.Ui;
 import java.io.IOException;
 
 public class GPTzerofive {
@@ -12,7 +19,7 @@ public class GPTzerofive {
         this.taskList = new TaskList();
     }
 
-    public void run() {
+    public void run() throws GPTException {
         ui.showWelcome();
         try {
             storage.loadFromFile(taskList);
@@ -22,18 +29,14 @@ public class GPTzerofive {
 
         String input = ui.readCommand();
         while (!"bye".equals(input)) {
-            try {
-                Command command = Parser.parse(input);
-                command.exec(taskList, ui, storage);
-            } catch (GPTException e) {
-                ui.showError(e.getMessage());
-            }
+            Command command = Parser.parse(input);
+            command.exec(taskList, ui, storage);
             input = ui.readCommand();
         }
         ui.showGoodbye();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws GPTException {
         new GPTzerofive().run();
     }
 }

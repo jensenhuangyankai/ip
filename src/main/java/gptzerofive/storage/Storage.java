@@ -1,3 +1,7 @@
+package gptzerofive.storage;
+
+import gptzerofive.exception.GPTException;
+import gptzerofive.task.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -25,7 +29,7 @@ public class Storage {
                     case "E" -> task = new Event(parts[2], parts[3], parts[4]);
                     default -> throw new GPTException("Unknown task type.");
                 }
-                task.done = Boolean.valueOf(parts[1]);
+                task.setDone(Boolean.valueOf(parts[1]));
                 taskList.addTask(task);
             }
             scanner.close();
