@@ -1,20 +1,30 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Event extends Task{
-    protected String startDate;
-    protected String endDate;
+    protected LocalDateTime startDate;
+    protected LocalDateTime endDate;
+    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+    private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
 
     public Event(String description, String startDate, String endDate) {
         super(description);
-        this.startDate = startDate;
-        this.endDate = endDate;
+        try {
+            this.startDate = LocalDateTime.parse(startDate, INPUT_FORMATTER);
+            this.endDate = LocalDateTime.parse(endDate, INPUT_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Please use d/M/yyyy HHmm.");
+        }
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + startDate + " to " + endDate + ")";
+        return "[E]" + super.toString() + " (at: " + startDate.format(OUTPUT_FORMATTER) + " to " + endDate.format(OUTPUT_FORMATTER) + ")";
     }
 
     @Override
     public String convertToFileString() {
-        return "E | " + (done ? "1" : "0") + " | " + description + " | " + startDate + " | " + endDate;
+        return "E | " + (done ? "1" : "0") + " | " + description + " | " + startDate.format(INPUT_FORMATTER) + " | " + endDate.format(INPUT_FORMATTER);
     }
 }
