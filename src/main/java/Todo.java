@@ -8,5 +8,10 @@ public class Todo extends Task{
     public String toString() {
         return "[T]" + super.toString();
     }
+
+    @Override
+    public String convertToFileString() {
+        return "T | " + (done ? "1" : "0") + " | " + description;
+    }
     
 }

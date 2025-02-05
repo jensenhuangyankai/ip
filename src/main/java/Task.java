@@ -1,7 +1,7 @@
 
 import java.util.List;
 
-public class Task {
+public abstract class Task {
     enum Type {
         TODO, DEADLINE, EVENT
     }
@@ -35,6 +35,9 @@ public class Task {
         }
         Misc.formattedPrint("Here are the tasks in your list:\n" + returnValue);
     }
+
+    
+    public abstract String convertToFileString();
 
     @Override
     public String toString() {
