@@ -1,5 +1,7 @@
 {
     "files.watcherExclude": {
         "**/target": true
-    }
+    },
+    "java.format.settings.url": ".vscode/java-formatter.xml",
+    
 }

@@ -1,12 +1,16 @@
 package gptzerofive.command;
 
-import gptzerofive.exception.GPTException;
+import gptzerofive.exception.GptException;
 import gptzerofive.storage.Storage;
-import gptzerofive.task.*;
+import gptzerofive.task.Task;
+import gptzerofive.task.TaskList;
 import gptzerofive.ui.Ui;
 
+/**
+ * Represents a command to be executed.
+ */
 public abstract class Command {
-    public abstract void exec(TaskList taskList, Ui ui, Storage storage) throws GPTException;
+    public abstract void exec(TaskList taskList, Ui ui, Storage storage) throws GptException;
 }
 
 class ListCommand extends Command {
@@ -24,7 +28,7 @@ class MarkCommand extends Command {
     }
 
     @Override
-    public void exec(TaskList taskList, Ui ui, Storage storage) throws GPTException {
+    public void exec(TaskList taskList, Ui ui, Storage storage) throws GptException {
         Task task = taskList.getTask(index - 1);
         task.markAsDone();
         ui.formattedPrint("Nice! I've marked this task as done:\n" + task.toString());
@@ -56,10 +60,24 @@ class DeleteCommand extends Command {
     }
 
     @Override
-    public void exec(TaskList taskList, Ui ui, Storage storage) throws GPTException {
+    public void exec(TaskList taskList, Ui ui, Storage storage) throws GptException {
         Task task = taskList.removeTask(index - 1);
         ui.formattedPrint("Noted. I've removed this task:\n" + task.toString() + "\nNow you have " + taskList.size()
                 + " tasks in the list.");
         storage.saveToFile(taskList);
+    }
+}
+
+class FindCommand extends Command {
+    private final String keyword;
+
+    public FindCommand(String keyword) {
+        this.keyword = keyword;
+    }
+
+    @Override
+    public void exec(TaskList taskList, Ui ui, Storage storage) {
+        TaskList filteredTaskList = taskList.filterTasks(keyword);
+        ui.printFilteredTaskList(filteredTaskList.getTaskListString());
     }
 }

@@ -3,6 +3,9 @@ package gptzerofive.task;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a list of tasks.
+ */
 public class TaskList {
     private final List<Task> tasks;
 
@@ -28,6 +31,22 @@ public class TaskList {
 
     public int size() {
         return tasks.size();
+    }
+
+    /**
+     * Filters the tasks based on the keyword.
+     *
+     * @param keyword the keyword to filter by
+     * @return TaskList containing tasks that contain the keyword
+     */
+    public TaskList filterTasks(String keyword) {
+        List<Task> filteredTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                filteredTasks.add(task);
+            }
+        }
+        return new TaskList(filteredTasks);
     }
 
     public String getTaskListString() {

@@ -1,13 +1,21 @@
 package gptzerofive.storage;
 
-import gptzerofive.exception.GPTException;
-import gptzerofive.task.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import gptzerofive.exception.GptException;
+import gptzerofive.task.Deadline;
+import gptzerofive.task.Event;
+import gptzerofive.task.Task;
+import gptzerofive.task.TaskList;
+import gptzerofive.task.Todo;
+
+/**
+ * Handles storage of tasks in a file.
+ */
 public class Storage {
     private final String filePath;
 
@@ -15,7 +23,14 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public void loadFromFile(TaskList taskList) throws IOException, GPTException {
+    /**
+     * Loads tasks from the file.
+     *
+     * @param taskList List of tasks.
+     * @throws IOException
+     * @throws GptException
+     */
+    public void loadFromFile(TaskList taskList) throws IOException, GptException {
         try {
             File file = new File(filePath);
             Scanner scanner = new Scanner(file);
@@ -24,10 +39,10 @@ public class Storage {
                 String[] parts = line.split(" \\| ");
                 Task task;
                 switch (parts[0]) {
-                    case "T" -> task = new Todo(parts[2]);
-                    case "D" -> task = new Deadline(parts[2], parts[3]);
-                    case "E" -> task = new Event(parts[2], parts[3], parts[4]);
-                    default -> throw new GPTException("Unknown task type.");
+                case "T" -> task = new Todo(parts[2]);
+                case "D" -> task = new Deadline(parts[2], parts[3]);
+                case "E" -> task = new Event(parts[2], parts[3], parts[4]);
+                default -> throw new GptException("Unknown task type.");
                 }
                 task.setDone(Boolean.valueOf(parts[1]));
                 taskList.addTask(task);
@@ -40,6 +55,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves tasks to the file.
+     *
+     * @param taskList List of tasks to save.
+     */
     public void saveToFile(TaskList taskList) {
         try {
             File file = new File(filePath);

@@ -1,9 +1,11 @@
 package gptzerofive.exception;
 
-public class GPTException extends Exception{
-    public GPTException(String message) {
+/**
+ * Represents an exception specific to GPTzerofive.
+ */
+public class GptException extends Exception {
+    public GptException(String message) {
         super(message);
     }
-    
-    
+
 }

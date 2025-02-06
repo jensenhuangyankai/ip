@@ -1,29 +1,42 @@
 package gptzerofive;
 
-import gptzerofive.command.*;
-import gptzerofive.exception.GPTException;
+import java.io.IOException;
+
+import gptzerofive.command.Command;
+import gptzerofive.command.Parser;
+import gptzerofive.exception.GptException;
 import gptzerofive.storage.Storage;
 import gptzerofive.task.TaskList;
 import gptzerofive.ui.Ui;
-import java.io.IOException;
 
-public class GPTzerofive {
+/**
+ * Main class for GPTzerofive application.
+ */
+public class Gptzerofive {
     private static final String FILE_PATH = "data/tasks.txt";
     private final Ui ui;
     private final Storage storage;
     private final TaskList taskList;
 
-    public GPTzerofive() {
+    /**
+    * Inits a new Gptzerofive instance.
+    */
+    public Gptzerofive() {
         this.ui = new Ui();
         this.storage = new Storage(FILE_PATH);
         this.taskList = new TaskList();
     }
 
-    public void run() throws GPTException {
+    /**
+     * Runs the application.
+     *
+     * @throws GptException If there is an error during execution.
+     */
+    public void run() throws GptException {
         ui.showWelcome();
         try {
             storage.loadFromFile(taskList);
-        } catch (IOException | GPTException e) {
+        } catch (IOException | GptException e) {
             ui.showError(e.getMessage());
         }
 
@@ -36,7 +49,13 @@ public class GPTzerofive {
         ui.showGoodbye();
     }
 
-    public static void main(String[] args) throws GPTException {
-        new GPTzerofive().run();
+    /**
+     * Main method to run the application.
+     *
+     * @param args Command line arguments.
+     * @throws GptException If there is an error during execution.
+     */
+    public static void main(String[] args) throws GptException {
+        new Gptzerofive().run();
     }
 }
