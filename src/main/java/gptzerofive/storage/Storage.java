@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import gptzerofive.exception.GptException;
+import gptzerofive.exception.InvalidDateFormatException;
 import gptzerofive.task.Deadline;
 import gptzerofive.task.Event;
 import gptzerofive.task.Task;
@@ -30,7 +31,7 @@ public class Storage {
      * @throws IOException
      * @throws GptException
      */
-    public void loadFromFile(TaskList taskList) throws IOException, GptException {
+    public void loadFromFile(TaskList taskList) throws IOException, GptException, InvalidDateFormatException {
         try {
             File file = new File(filePath);
             Scanner scanner = new Scanner(file);

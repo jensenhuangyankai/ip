@@ -5,6 +5,7 @@ import java.io.IOException;
 import gptzerofive.command.Command;
 import gptzerofive.command.Parser;
 import gptzerofive.exception.GptException;
+import gptzerofive.exception.InvalidDateFormatException;
 import gptzerofive.storage.Storage;
 import gptzerofive.task.TaskList;
 import gptzerofive.ui.Ui;
@@ -19,8 +20,8 @@ public class Gptzerofive {
     private final TaskList taskList;
 
     /**
-    * Inits a new Gptzerofive instance.
-    */
+     * Inits a new Gptzerofive instance.
+     */
     public Gptzerofive() {
         this.ui = new Ui();
         this.storage = new Storage(FILE_PATH);
@@ -32,7 +33,7 @@ public class Gptzerofive {
      *
      * @throws GptException If there is an error during execution.
      */
-    public void run() throws GptException {
+    public void run() throws GptException, InvalidDateFormatException {
         ui.showWelcome();
         try {
             storage.loadFromFile(taskList);
@@ -49,13 +50,22 @@ public class Gptzerofive {
         ui.showGoodbye();
     }
 
+    public String getWelcome() {
+        return "Hello! I'm GPTzerofive\nWhat can I do for you?";
+    }
+
+    public String getResponse(String input) throws GptException {
+        Command command = Parser.parse(input);
+        return command.exec(taskList, ui, storage);
+    }
+
     /**
      * Main method to run the application.
      *
      * @param args Command line arguments.
      * @throws GptException If there is an error during execution.
      */
-    public static void main(String[] args) throws GptException {
+    public static void main(String[] args) throws GptException, InvalidDateFormatException {
         new Gptzerofive().run();
     }
 }

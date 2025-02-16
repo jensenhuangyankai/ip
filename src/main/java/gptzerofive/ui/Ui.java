@@ -18,21 +18,21 @@ public class Ui {
     /**
      * Displays the welcome message.
      */
-    public void showWelcome() {
+    public String showWelcome() {
         String helloString = """
                 Hello! I'm GPT0.5.
                 What can I do for you today?
                 """;
-        formattedPrint(helloString);
+        return formattedPrint(helloString);
     }
 
     /**
      * Displays the goodbye message.
      */
-    public void showGoodbye() {
+    public String showGoodbye() {
         String goodbyeString = """
                 Goodbye! Have a nice day!""";
-        formattedPrint(goodbyeString);
+        return formattedPrint(goodbyeString);
     }
 
     /**
@@ -48,8 +48,8 @@ public class Ui {
     /**
      * Displays a line separator.
      */
-    public void showLine() {
-        System.out.println("\t---------------------------------------------------");
+    public String showLine() {
+        return ("\t---------------------------------------------------");
     }
 
     /**
@@ -57,8 +57,8 @@ public class Ui {
      *
      * @param message The error message to display.
      */
-    public void showError(String message) {
-        formattedPrint(message);
+    public String showError(String message) {
+        return formattedPrint(message);
     }
 
     /**
@@ -66,8 +66,8 @@ public class Ui {
      *
      * @param taskList The task list to display.
      */
-    public void showTaskList(String taskList) {
-        formattedPrint("Here are the tasks in your list:\n" + taskList);
+    public String showTaskList(String taskList) {
+        return formattedPrint("Here are the tasks in your list:\n" + taskList);
     }
 
     /**
@@ -75,7 +75,7 @@ public class Ui {
      *
      * @param message The message to format and print.
      */
-    public void formattedPrint(String message) {
+    public String formattedPrint(String message) {
         Scanner scanner = new Scanner(message);
         String resultString = "";
         while (scanner.hasNextLine()) {
@@ -84,8 +84,7 @@ public class Ui {
         }
         scanner.close();
 
-        System.out.println("\t---------------------------------------------------\n" + resultString
-                + "\t---------------------------------------------------");
+        return resultString;
     }
 
     /**
@@ -94,9 +93,7 @@ public class Ui {
      * @param taskList The message to format and print. Take note that the parameter
      *                 is named tasklist, but is actually a string.
      */
-    public void printFilteredTaskList(String taskList) {
-        System.out.println("Here are the matching tasks in your list:\n"
-                + "\t---------------------------------------------------\n" + taskList
-                + "\t---------------------------------------------------");
+    public String printFilteredTaskList(String taskList) {
+        return "Here are the matching tasks in your list:\n" + taskList;
     }
 }

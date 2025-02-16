@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import gptzerofive.exception.InvalidDateFormatException;
+
 /**
  * Represents a deadline task.
  */
@@ -19,7 +21,7 @@ public class Deadline extends Task {
      * @param description The description of the deadline.
      * @param by          The deadline date and time.
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, String by) throws InvalidDateFormatException {
         super(description);
         this.by = parseDate(by);
     }
@@ -38,13 +40,13 @@ public class Deadline extends Task {
      *
      * @param date The date string to parse.
      * @return The parsed LocalDateTime.
-     * @throws IllegalArgumentException If the date format is invalid.
+     * @throws InvalidDateFormatException If the date format is invalid.
      */
-    private LocalDateTime parseDate(String date) {
+    private LocalDateTime parseDate(String date) throws InvalidDateFormatException {
         try {
             return LocalDateTime.parse(date, INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid date format. Please use d/M/yyyy HHmm.");
+            throw new InvalidDateFormatException("Invalid date format. Please use d/M/yyyy HHmm.");
         }
     }
 
