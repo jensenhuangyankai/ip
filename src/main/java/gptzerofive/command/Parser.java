@@ -18,6 +18,7 @@ public class Parser {
      * @throws GptException If the command is invalid.
      */
     public static Command parse(String input) {
+        assert input != null : "Input command should not be null";
         try {
             String[] parts = input.split(" ", 2);
             String command = parts[0];
@@ -51,6 +52,8 @@ public class Parser {
     }
 
     private static Command parseDeadline(String... details) throws GptException {
+        assert details != null : "Details should not be null for deadline command";
+
         if (details.length < 2) {
             throw new GptException(
                     "Please supply a description and a deadline. Format: deadline <description> /by <deadline>");
@@ -63,6 +66,8 @@ public class Parser {
     }
 
     private static Command parseEvent(String... details) throws GptException {
+        assert details != null : "Details should not be null for event command";
+
         if (details.length < 3) {
             String exceptionMessage = "Please supply a description, a /from time, and a /to time. "
                     + "Format: event <description> /from <start time> /to <end time>";

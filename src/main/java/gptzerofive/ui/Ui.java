@@ -58,6 +58,7 @@ public class Ui {
      * @param message The error message to display.
      */
     public String showError(String message) {
+        assert message != null : "Error message should not be null";
         return formattedPrint(message);
     }
 
@@ -67,6 +68,7 @@ public class Ui {
      * @param taskList The task list to display.
      */
     public String showTaskList(String taskList) {
+        assert taskList != null : "Task list should not be null";
         return formattedPrint("Here are the tasks in your list:\n" + taskList);
     }
 
@@ -76,6 +78,7 @@ public class Ui {
      * @param message The message to format and print.
      */
     public String formattedPrint(String message) {
+        assert message != null : "Message should not be null";
         Scanner scanner = new Scanner(message);
         String resultString = "";
         while (scanner.hasNextLine()) {
@@ -94,6 +97,7 @@ public class Ui {
      *                 is named tasklist, but is actually a string.
      */
     public String printFilteredTaskList(String taskList) {
+        assert taskList != null : "Task list should not be null";
         return "Here are the matching tasks in your list:\n" + taskList;
     }
 }

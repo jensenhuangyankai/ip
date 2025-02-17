@@ -43,7 +43,9 @@ public class Gptzerofive {
 
         String input = ui.readCommand();
         while (!"bye".equals(input)) {
+            assert input != null : "Input command should not be null";
             Command command = Parser.parse(input);
+            assert command != null : "Parsed command should not be null";
             command.exec(taskList, ui, storage);
             input = ui.readCommand();
         }
@@ -55,7 +57,9 @@ public class Gptzerofive {
     }
 
     public String getResponse(String input) throws GptException {
+        assert input != null : "Input command should not be null";
         Command command = Parser.parse(input);
+        assert command != null : "Parsed command should not be null";
         return command.exec(taskList, ui, storage);
     }
 
