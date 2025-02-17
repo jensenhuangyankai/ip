@@ -2,6 +2,7 @@ package gptzerofive.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a list of tasks.
@@ -40,12 +41,8 @@ public class TaskList {
      * @return TaskList containing tasks that contain the keyword
      */
     public TaskList filterTasks(String keyword) {
-        List<Task> filteredTasks = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task.getDescription().contains(keyword)) {
-                filteredTasks.add(task);
-            }
-        }
+        List<Task> filteredTasks = tasks.stream().filter(task -> task.getDescription().contains(keyword))
+                .collect(Collectors.toList());
         return new TaskList(filteredTasks);
     }
 
