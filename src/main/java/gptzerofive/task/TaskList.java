@@ -14,10 +14,12 @@ public class TaskList {
     }
 
     public TaskList(List<Task> tasks) {
+        assert tasks != null : "Task list should not be null";
         this.tasks = tasks;
     }
 
     public void addTask(Task task) {
+        assert task != null : "Task should not be null";
         tasks.add(task);
     }
 
@@ -40,6 +42,7 @@ public class TaskList {
      * @return TaskList containing tasks that contain the keyword
      */
     public TaskList filterTasks(String keyword) {
+        assert keyword != null : "Keyword should not be null";
         List<Task> filteredTasks = new ArrayList<>();
         for (Task task : tasks) {
             if (task.getDescription().contains(keyword)) {
