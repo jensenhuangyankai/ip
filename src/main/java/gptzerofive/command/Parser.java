@@ -34,25 +34,9 @@ public class Parser {
                 }
                 return new AddCommand(new Todo(details));
             case "deadline":
-                String[] deadlineSections = details.split(" /by ");
-                if (deadlineSections.length < 2) {
-                    throw new GptException(
-                            "Please supply a description and a deadline."
-                            + "Format: deadline <description> /by <deadline>");
-                }
-                try {
-                    return new AddCommand(new Deadline(deadlineSections[0], deadlineSections[1]));
-                } catch (InvalidDateFormatException e) {
-                    throw new GptException("Wrong date format.");
-                }
+                return parseDeadline(details.split(" /by "));
             case "event":
-                String[] eventSections = details.split(" /from | /to ");
-                if (eventSections.length < 3) {
-                    String exceptionMessage = "Please supply a description, a /from time, and a /to time. "
-                            + "Format: event <description> /from <start time> /to <end time>";
-                    throw new GptException(exceptionMessage);
-                }
-                return new AddCommand(new Event(eventSections[0], eventSections[1], eventSections[2]));
+                return parseEvent(details.split(" /from | /to "));
             case "find":
                 return new FindCommand(details);
             case "delete":
@@ -61,8 +45,29 @@ public class Parser {
                 throw new GptException("No such command found.");
             }
         } catch (GptException e) {
-            //System.out.println(e.getMessage());
+            // System.out.println(e.getMessage());
             return new ErrorCommand(e.getMessage());
         }
+    }
+
+    private static Command parseDeadline(String... details) throws GptException {
+        if (details.length < 2) {
+            throw new GptException(
+                    "Please supply a description and a deadline. Format: deadline <description> /by <deadline>");
+        }
+        try {
+            return new AddCommand(new Deadline(details[0], details[1]));
+        } catch (InvalidDateFormatException e) {
+            throw new GptException("Wrong date format.");
+        }
+    }
+
+    private static Command parseEvent(String... details) throws GptException {
+        if (details.length < 3) {
+            String exceptionMessage = "Please supply a description, a /from time, and a /to time. "
+                    + "Format: event <description> /from <start time> /to <end time>";
+            throw new GptException(exceptionMessage);
+        }
+        return new AddCommand(new Event(details[0], details[1], details[2]));
     }
 }
