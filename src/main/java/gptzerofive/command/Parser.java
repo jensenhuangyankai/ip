@@ -19,6 +19,7 @@ public class Parser {
      */
     public static Command parse(String input) {
         assert input != null : "Input command should not be null";
+        
         String[] parts = input.split(" ", 2);
         String command = parts[0];
         String details = parts.length > 1 ? parts[1] : "";
