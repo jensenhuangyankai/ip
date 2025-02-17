@@ -8,9 +8,9 @@ public abstract class Task {
         TODO, DEADLINE, EVENT
     }
 
-    private Type type; // Make variable private
-    private String description; // Make variable private
-    private Boolean done; // Make variable private
+    private Type type; 
+    private String description; 
+    private Boolean isDone; 
 
     /**
      * Constructs a new Task with the specified description. The task is initially
@@ -20,7 +20,7 @@ public abstract class Task {
      */
     public Task(String description) {
         this.description = description;
-        this.done = false;
+        this.isDone = false;
     }
 
     /**
@@ -29,14 +29,14 @@ public abstract class Task {
      * @return "X" if the task is done, else " ".
      */
     public String xIfDone() {
-        return this.done ? "X" : " ";
+        return this.isDone ? "X" : " ";
     }
 
     /**
      * Marks the task as done.
      */
     public void markAsDone() {
-        this.done = true;
+        this.isDone = true;
     }
 
     /**
@@ -63,7 +63,7 @@ public abstract class Task {
      * @return True if the task is done, else false.
      */
     public Boolean isDone() {
-        return done;
+        return isDone;
     }
 
     /**
@@ -90,7 +90,7 @@ public abstract class Task {
      * @param done The status to set.
      */
     public void setDone(Boolean done) {
-        this.done = done;
+        this.isDone = done;
     }
 
     /**

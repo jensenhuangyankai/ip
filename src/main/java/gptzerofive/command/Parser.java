@@ -18,39 +18,49 @@ public class Parser {
      * @throws GptException If the command is invalid.
      */
     public static Command parse(String input) {
-        try {
-            String[] parts = input.split(" ", 2);
-            String command = parts[0];
-            String details = parts.length > 1 ? parts[1] : "";
+        assert input != null : "Input command should not be null";
+        String[] parts = input.split(" ", 2);
+        String command = parts[0];
+        String details = parts.length > 1 ? parts[1] : "";
 
-            switch (command) {
-            case "list":
-                return new ListCommand();
-            case "mark":
-                return new MarkCommand(Integer.parseInt(details));
-            case "todo":
-                if (details.isEmpty()) {
-                    throw new GptException("Please supply a description. Format: todo <description>");
-                }
-                return new AddCommand(new Todo(details));
-            case "deadline":
-                return parseDeadline(details.split(" /by "));
-            case "event":
-                return parseEvent(details.split(" /from | /to "));
-            case "find":
-                return new FindCommand(details);
-            case "delete":
-                return new DeleteCommand(Integer.parseInt(details));
-            default:
-                throw new GptException("No such command found.");
-            }
+        try {
+            return parseCommand(command, details);
         } catch (GptException e) {
-            // System.out.println(e.getMessage());
             return new ErrorCommand(e.getMessage());
         }
     }
 
+    private static Command parseCommand(String command, String details) throws GptException {
+        switch (command) {
+        case "list":
+            return new ListCommand();
+        case "mark":
+            return new MarkCommand(Integer.parseInt(details));
+        case "todo":
+            return parseTodoCommand(details);
+        case "deadline":
+            return parseDeadline(details.split(" /by "));
+        case "event":
+            return parseEvent(details.split(" /from | /to "));
+        case "find":
+            return new FindCommand(details);
+        case "delete":
+            return new DeleteCommand(Integer.parseInt(details));
+        default:
+            throw new GptException("No such command found.");
+        }
+    }
+
+    private static Command parseTodoCommand(String details) throws GptException {
+        if (details.isEmpty()) {
+            throw new GptException("Please supply a description. Format: todo <description>");
+        }
+        return new AddCommand(new Todo(details));
+    }
+
     private static Command parseDeadline(String... details) throws GptException {
+        assert details != null : "Details should not be null for deadline command";
+
         if (details.length < 2) {
             throw new GptException(
                     "Please supply a description and a deadline. Format: deadline <description> /by <deadline>");
@@ -63,6 +73,8 @@ public class Parser {
     }
 
     private static Command parseEvent(String... details) throws GptException {
+        assert details != null : "Details should not be null for event command";
+
         if (details.length < 3) {
             String exceptionMessage = "Please supply a description, a /from time, and a /to time. "
                     + "Format: event <description> /from <start time> /to <end time>";
