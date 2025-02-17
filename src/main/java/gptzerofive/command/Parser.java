@@ -58,7 +58,7 @@ public class Parser {
         try {
             return new AddCommand(new Deadline(details[0], details[1]));
         } catch (InvalidDateFormatException e) {
-            throw new GptException("Wrong date format.");
+            throw new GptException("Wrong date format. Please use d/M/yyyy HHmm.");
         }
     }
 
