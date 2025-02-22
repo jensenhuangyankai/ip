@@ -2,7 +2,7 @@
 
 GPTZeroFive is a command-line task manager that helps you efficiently manage tasks, deadlines, events, and notes through simple commands.
 
-![alt text](image.png)
+![alt text](Ui.png)
 
 ## Command Examples
 
