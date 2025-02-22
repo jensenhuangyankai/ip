@@ -57,6 +57,6 @@ public class Event extends Task {
     @Override
     public String convertToFileString() {
         return "E | " + (super.isDone() ? "1" : "0") + " | " + super.getDescription() + " | "
-                + startDate.format(INPUT_FORMATTER) + " | " + endDate.format(INPUT_FORMATTER);
+                + startDate.format(INPUT_FORMATTER) + " | " + endDate.format(INPUT_FORMATTER) + " | " + super.getNote();
     }
 }

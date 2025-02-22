@@ -58,7 +58,7 @@ public class Deadline extends Task {
     @Override
     public String convertToFileString() {
         return "D | " + (super.isDone() ? "1" : "0") + " | " + super.getDescription() + " | "
-                + by.format(INPUT_FORMATTER);
+                + by.format(INPUT_FORMATTER) + " | " + super.getNote();
     }
 
 }

@@ -1,5 +1,7 @@
 package gptzerofive.task;
 
+import gptzerofive.notes.Note;
+
 /**
  * Represents a task.
  */
@@ -8,9 +10,10 @@ public abstract class Task {
         TODO, DEADLINE, EVENT
     }
 
-    private Type type; 
-    private String description; 
-    private Boolean isDone; 
+    private Type type;
+    private String description;
+    private Boolean isDone;
+    private Note note;
 
     /**
      * Constructs a new Task with the specified description. The task is initially
@@ -21,6 +24,17 @@ public abstract class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.note = new Note("");
+    }
+
+    /**
+     * @param note        The note to be added to the task.
+     * @param description The description of the task.
+     */
+    public Task(String description, Note note) {
+        this.description = description;
+        this.isDone = false;
+        this.note = note;
     }
 
     /**
@@ -91,6 +105,14 @@ public abstract class Task {
      */
     public void setDone(Boolean done) {
         this.isDone = done;
+    }
+
+    public String getNote() {
+        return note.toString();
+    }
+
+    public void setNote(Note note) {
+        this.note = note;
     }
 
     /**

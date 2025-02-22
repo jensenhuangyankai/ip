@@ -31,7 +31,7 @@ public class Todo extends Task {
      */
     @Override
     public String convertToFileString() {
-        return "T | " + (super.isDone() ? "1" : "0") + " | " + super.getDescription();
+        return "T | " + (super.isDone() ? "1" : "0") + " | " + super.getDescription() + " | " + super.getNote();
     }
 
 }

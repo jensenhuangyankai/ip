@@ -19,7 +19,6 @@ public class Parser {
      */
     public static Command parse(String input) {
         assert input != null : "Input command should not be null";
-        
         String[] parts = input.split(" ", 2);
         String command = parts[0];
         String details = parts.length > 1 ? parts[1] : "";
@@ -47,6 +46,14 @@ public class Parser {
             return new FindCommand(details);
         case "delete":
             return new DeleteCommand(Integer.parseInt(details));
+        case "newNote":
+            return new NewNoteCommand(Integer.parseInt(details.split(" ")[0]), details.split(" ", 2)[1]);
+        case "showNote":
+            return new ShowNoteCommand(Integer.parseInt(details));
+        case "deleteNote":
+            return new DeleteNoteCommand(Integer.parseInt(details));
+        case "editNote":
+            return new EditNoteCommand(Integer.parseInt(details.split(" ")[0]), details.split(" ", 2)[1]);
         default:
             throw new GptException("No such command found.");
         }
