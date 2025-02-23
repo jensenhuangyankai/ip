@@ -7,7 +7,7 @@ GPTZeroFive is a command-line task manager that helps you efficiently manage tas
 ## Command Examples
 
 Below are some example commands and their expected outputs:
-
+ 
 - Adding a todo:
   ```
   Input: todo finish homework
