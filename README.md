@@ -10,7 +10,7 @@ GPTZeroFive is a task management application that helps you keep track of your t
 - Find tasks by keyword
 - Add, show, edit, and delete notes for tasks
 - List all tasks
-
+ 
 ## Usage
 
 Here are some example commands you can use:
